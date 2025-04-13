@@ -1,0 +1,31 @@
+{
+  "name": "hollow-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Brooklyn-Dev/hollow-bot.git"
+  },
+  "keywords": [],
+  "author": "Brooklyn Baylis",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Brooklyn-Dev/hollow-bot/issues"
+  },
+  "homepage": "https://github.com/Brooklyn-Dev/hollow-bot#readme",
+  "dependencies": {
+    "discord.js": "^14.18.0",
+    "dotenv": "^16.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.1",
+    "tsx": "^4.19.3"
+  }
+}
