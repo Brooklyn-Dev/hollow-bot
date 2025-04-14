@@ -2,15 +2,17 @@ import { CommandOptions, SlashCommandProps } from "commandkit";
 import { EmbedBuilder, MessageFlags, SlashCommandBuilder } from "discord.js";
 
 import { sendWithPreview } from "../utils/sendWithPreview";
-import charms from "../data/charms.json";
+import journal from "../data/journal.json";
 
 export const data = new SlashCommandBuilder()
-  .setName("charms")
-  .setDescription("Show information about a Hollow Knight charm (random if name is not specified).")
+  .setName("journal")
+  .setDescription(
+    "Show Hunter's Journal description and notes about a journal entry (random if name is not specified)."
+  )
   .addStringOption((option) =>
     option
       .setName("name")
-      .setDescription("Name of the charm")
+      .setDescription("Name of the journal entry")
       .setRequired(false)
       .setAutocomplete(true)
   );
@@ -18,15 +20,15 @@ export const data = new SlashCommandBuilder()
 export async function run({ interaction }: SlashCommandProps) {
   const name = interaction.options.getString("name");
 
-  let charm;
+  let entry;
   if (name) {
-    // Try to find the charm by name
-    charm = charms.find((c) => c.name.toLowerCase() === name.toLowerCase());
+    // Try to find the journal entry by name
+    entry = journal.find((e) => e.name.toLowerCase() === name.toLowerCase());
 
-    if (!charm) {
+    if (!entry) {
       // If not found, send an ephemeral error message
       const errorEmbed = new EmbedBuilder()
-        .setDescription(`No charm found with the name "${name}".`)
+        .setDescription(`No journal entry found with the name "${name}".`)
         .setColor("Red");
 
       return await interaction.reply({
@@ -35,20 +37,19 @@ export async function run({ interaction }: SlashCommandProps) {
       });
     }
   } else {
-    // No name provided — select a random charm
-    charm = charms[Math.floor(Math.random() * charms.length)];
+    // No name provided — select a random journal entry
+    entry = journal[Math.floor(Math.random() * journal.length)];
   }
 
   // Create the embed with charm info
   const embed = new EmbedBuilder()
-    .setTitle(`Charm: ${charm.name}`)
-    .setDescription(charm.description)
+    .setTitle(`Hunter's Journal: ${entry.name}`)
     .addFields(
-      { name: "📍 Location", value: `||${charm.location}||` || "Unknown", inline: true },
-      { name: "🔩 Notches", value: charm.notches || "?", inline: true },
-      { name: "🔗 Wiki", value: `[${charm.name}](${charm.url})`, inline: true }
+      { name: "**Description:**", value: `${entry.description}` || "Unknown", inline: false },
+      { name: "**Hunter's notes:**", value: `${entry.notes}` || "Unknown", inline: false },
+      { name: "🔗 Wiki", value: `[${entry.name}](${entry.url})`, inline: false }
     )
-    .setThumbnail(charm.imageUrl)
+    .setThumbnail(entry.imageUrl)
     .setColor("Blue");
 
   await sendWithPreview({ interaction, embed });

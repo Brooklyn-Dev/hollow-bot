@@ -1,6 +1,7 @@
 import { Interaction } from "discord.js";
 
 import charms from "../../data/charms.json";
+import journal from "../../data/journal.json";
 
 module.exports = (interaction: Interaction) => {
   if (!interaction.isAutocomplete()) return;
@@ -19,6 +20,18 @@ module.exports = (interaction: Interaction) => {
         return {
           name: choice.name,
           value: choice.name,
+        };
+      });
+      break;
+
+    case "journal":
+      filteredChoices = journal.filter((entry) =>
+        entry.name.toLowerCase().startsWith(focusedValue.toLowerCase())
+      );
+      results = filteredChoices.map((entry) => {
+        return {
+          name: entry.name,
+          value: entry.name,
         };
       });
       break;
