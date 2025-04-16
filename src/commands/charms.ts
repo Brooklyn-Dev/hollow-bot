@@ -3,6 +3,7 @@ import { EmbedBuilder, MessageFlags, SlashCommandBuilder } from "discord.js";
 
 import { sendWithPreview } from "../utils/sendWithPreview";
 import charms from "../data/charms.json";
+import { ensureTextChannel } from "../utils/ensureTextChannel";
 
 export const data = new SlashCommandBuilder()
   .setName("charms")
@@ -16,6 +17,9 @@ export const data = new SlashCommandBuilder()
   );
 
 export async function run({ interaction }: SlashCommandProps) {
+  const channel = await ensureTextChannel(interaction);
+  if (channel === null) return;
+
   const name = interaction.options.getString("name");
 
   let charm;
