@@ -9,6 +9,7 @@ import {
   MessageFlags,
 } from "discord.js";
 import { SlashCommandProps } from "commandkit";
+import { addUsageFooter } from "./addUsageFooter";
 
 /**
  * Sends an ephemeral preview of an embed with a "Send this message" button.
@@ -21,16 +22,7 @@ export async function sendWithPreview({
   interaction: SlashCommandProps["interaction"];
   embed: EmbedBuilder;
 }) {
-  //  Get the command used (e.g. "/charms name: Wayward Compass")
-  const commandName = `/${interaction.commandName}`;
-  const options = interaction.options.data.map((opt) => `${opt.name}: ${opt.value}`).join(" ");
-  const fullCommand = options ? `${commandName} ${options}` : commandName;
-
-  // Set a footer on the embed to show who used the command and what it was
-  embed.setFooter({
-    text: `@${interaction.user.username} used ${fullCommand}`,
-    iconURL: interaction.user.displayAvatarURL(),
-  });
+  addUsageFooter(embed, interaction);
 
   // Create button to send message
   const button = new ButtonBuilder()
