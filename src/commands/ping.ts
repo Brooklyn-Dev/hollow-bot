@@ -1,12 +1,15 @@
-import { CommandData, CommandOptions, SlashCommandProps } from "commandkit";
+import { CommandOptions, SlashCommandProps } from "commandkit";
+import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
 
-export const data: CommandData = {
-  name: "ping",
-  description: "Pong!",
-};
+export const data = new SlashCommandBuilder().setName("ping").setDescription("Pong!");
 
 export function run({ interaction, client }: SlashCommandProps) {
-  interaction.reply(`:ping_pong: Pong! ${client.ws.ping}ms`);
+  const embed = new EmbedBuilder()
+    .setTitle("Pong!")
+    .setDescription(`:ping_pong: ${client.ws.ping}ms`)
+    .setColor("Blue");
+
+  interaction.reply({ embeds: [embed] });
 }
 
 export const options: CommandOptions = {

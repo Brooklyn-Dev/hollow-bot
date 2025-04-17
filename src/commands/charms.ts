@@ -1,9 +1,9 @@
 import { CommandOptions, SlashCommandProps } from "commandkit";
 import { EmbedBuilder, MessageFlags, SlashCommandBuilder } from "discord.js";
 
+import { ensureTextChannel } from "../utils/ensureTextChannel";
 import { sendWithPreview } from "../utils/sendWithPreview";
 import charms from "../data/charms.json";
-import { ensureTextChannel } from "../utils/ensureTextChannel";
 
 export const data = new SlashCommandBuilder()
   .setName("charms")

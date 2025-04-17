@@ -6,34 +6,26 @@ import journal from "../../data/journal.json";
 module.exports = (interaction: Interaction) => {
   if (!interaction.isAutocomplete()) return;
 
-  const focusedValue = interaction.options.getFocused();
-
-  let filteredChoices;
+  const focusedValue = interaction.options.getFocused().toLowerCase();
   let results: { name: string; value: string }[] = [];
 
   switch (interaction.commandName) {
     case "charms":
-      filteredChoices = charms.filter((charm) =>
-        charm.name.toLowerCase().startsWith(focusedValue.toLowerCase())
-      );
-      results = filteredChoices.map((choice) => {
-        return {
+      results = charms
+        .filter((charm) => charm.name.toLowerCase().startsWith(focusedValue))
+        .map((choice) => ({
           name: choice.name,
           value: choice.name,
-        };
-      });
+        }));
       break;
 
     case "journal":
-      filteredChoices = journal.filter((entry) =>
-        entry.name.toLowerCase().startsWith(focusedValue.toLowerCase())
-      );
-      results = filteredChoices.map((entry) => {
-        return {
+      results = journal
+        .filter((entry) => entry.name.toLowerCase().startsWith(focusedValue))
+        .map((entry) => ({
           name: entry.name,
           value: entry.name,
-        };
-      });
+        }));
       break;
 
     default:
