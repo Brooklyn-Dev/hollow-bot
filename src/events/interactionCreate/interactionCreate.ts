@@ -1,5 +1,6 @@
 import { Interaction } from "discord.js";
 
+import geoguessrModes from "../../data/geoguessrModes.json";
 import charms from "../../data/charms.json";
 import journal from "../../data/journal.json";
 
@@ -17,6 +18,12 @@ module.exports = (interaction: Interaction) => {
           name: choice.name,
           value: choice.name,
         }));
+      break;
+
+    case "geoguessr":
+      results = geoguessrModes
+        .filter((mode) => mode.name.toLowerCase().startsWith(focusedValue))
+        .map((mode) => ({ name: mode.name, value: mode.name }));
       break;
 
     case "journal":

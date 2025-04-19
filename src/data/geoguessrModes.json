@@ -1,0 +1,22 @@
+[
+  {
+    "id": "1",
+    "name": "Easy",
+    "categories": ["area", "boss"]
+  },
+  {
+    "id": "2",
+    "name": "Medium",
+    "categories": ["subarea", "landmark"]
+  },
+  {
+    "id": "3",
+    "name": "Hard",
+    "categories": ["charm", "specialRoom"]
+  },
+  {
+    "id": "4",
+    "name": "Everything",
+    "categories": ["area", "boss", "charm", "landmark", "specialRoom", "subarea"]
+  }
+]

@@ -1,4 +1,5 @@
 data
+!data/geoguessrModes.json
 dist
 node_modules
 
