@@ -3,6 +3,7 @@ import { Interaction } from "discord.js";
 import geoguessrModes from "../../data/geoguessrModes.json";
 import charms from "../../data/charms.json";
 import journal from "../../data/journal.json";
+import precepts from "../../data/precepts.json";
 
 module.exports = (interaction: Interaction) => {
   if (!interaction.isAutocomplete()) return;
@@ -23,15 +24,24 @@ module.exports = (interaction: Interaction) => {
     case "geoguessr":
       results = geoguessrModes
         .filter((mode) => mode.name.toLowerCase().startsWith(focusedValue))
-        .map((mode) => ({ name: mode.name, value: mode.name }));
+        .map((choice) => ({ name: choice.name, value: choice.name }));
       break;
 
     case "journal":
       results = journal
         .filter((entry) => entry.name.toLowerCase().startsWith(focusedValue))
-        .map((entry) => ({
-          name: entry.name,
-          value: entry.name,
+        .map((choice) => ({
+          name: choice.name,
+          value: choice.name,
+        }));
+      break;
+
+    case "precepts":
+      results = precepts
+        .filter((precept) => precept.name.toLowerCase().startsWith(focusedValue))
+        .map((choice) => ({
+          name: choice.name,
+          value: choice.name,
         }));
       break;
 

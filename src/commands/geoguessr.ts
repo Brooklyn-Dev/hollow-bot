@@ -1,10 +1,10 @@
 import { CommandOptions, SlashCommandProps } from "commandkit";
 import { EmbedBuilder, Message, MessageFlags, SlashCommandBuilder, TextChannel } from "discord.js";
 
-import { ensureTextChannel } from "../utils/ensureTextChannel";
-import { getRandomLocation } from "../utils/geoguessr/getRandomLocation";
-import { formatHint1, formatHint2 } from "../utils/geoguessr/formatHints";
 import { addUsageFooter } from "../utils/addUsageFooter";
+import { ensureTextChannel } from "../utils/ensureTextChannel";
+import { formatHint1, formatHint2 } from "../utils/geoguessr/formatHints";
+import { getRandomLocation } from "../utils/geoguessr/getRandomLocation";
 
 import { GeoguessrMode, EntryType } from "../types/geoguessrTypes";
 import modes from "../data/geoguessrModes.json";

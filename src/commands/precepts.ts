@@ -3,17 +3,18 @@ import { EmbedBuilder, MessageFlags, SlashCommandBuilder } from "discord.js";
 
 import { ensureTextChannel } from "../utils/ensureTextChannel";
 import { sendWithPreview } from "../utils/sendWithPreview";
-import journal from "../data/journal.json";
+import precepts from "../data/precepts.json";
+
+const ZOTE_URL = "https://hollowknight.wiki/w/Zote";
+const ZOTE_IMAGE_URL = "https://cdn.wikimg.net/en/hkwiki/images/5/5a/B_Zote.png";
 
 export const data = new SlashCommandBuilder()
-  .setName("journal")
-  .setDescription(
-    "Show Hunter's Journal description and notes about a journal entry (random if name is not specified)."
-  )
+  .setName("precepts")
+  .setDescription("Show infomation about a Zote precept (random if name not specified).")
   .addStringOption((option) =>
     option
       .setName("name")
-      .setDescription("Name of the journal entry")
+      .setDescription("Name of the precept")
       .setRequired(false)
       .setAutocomplete(true)
   );
@@ -24,15 +25,14 @@ export async function run({ interaction }: SlashCommandProps) {
 
   const name = interaction.options.getString("name");
 
-  let entry;
+  let precept;
   if (name) {
-    // Try to find the journal entry by name
-    entry = journal.find((e) => e.name.toLowerCase() === name.toLowerCase());
-
-    if (!entry) {
+    // Try to find the precept by name
+    precept = precepts.find((p) => p.name.toLowerCase() === name.toLowerCase());
+    if (!precept) {
       // If not found, send an ephemeral error message
       const errorEmbed = new EmbedBuilder()
-        .setDescription(`No journal entry found with the name "${name}".`)
+        .setDescription(`No precept found with the name "${name}".`)
         .setColor("Red");
 
       return await interaction.reply({
@@ -41,19 +41,16 @@ export async function run({ interaction }: SlashCommandProps) {
       });
     }
   } else {
-    // No name provided — select a random journal entry
-    entry = journal[Math.floor(Math.random() * journal.length)];
+    // No name provided — select a random precept
+    precept = precepts[Math.floor(Math.random() * precepts.length)];
   }
 
-  // Create the embed with charm info
+  // Create the embed with precept info
   const embed = new EmbedBuilder()
-    .setTitle(`Hunter's Journal: ${entry.name}`)
-    .addFields(
-      { name: "**Description:**", value: `${entry.description}` || "Unknown", inline: false },
-      { name: "**Hunter's notes:**", value: `${entry.notes}` || "Unknown", inline: false },
-      { name: "🔗 Wiki", value: `[${entry.name}](${entry.url})`, inline: false }
-    )
-    .setThumbnail(entry.imageUrl)
+    .setTitle(precept.name)
+    .setDescription(precept.description)
+    .addFields({ name: "🔗 Wiki", value: `[${precept.name}](${ZOTE_URL})`, inline: true })
+    .setThumbnail(ZOTE_IMAGE_URL)
     .setColor("Blue");
 
   await sendWithPreview({ interaction, embed });
