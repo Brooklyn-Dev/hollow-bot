@@ -8,7 +8,7 @@ import journal from "../data/journal.json";
 export const data = new SlashCommandBuilder()
   .setName("journal")
   .setDescription(
-    "Show Hunter's Journal description and notes about a journal entry (random if name is not specified)."
+    "Show Hunter's Journal description and notes about a journal entry (random if name is unspecified)."
   )
   .addStringOption((option) =>
     option

@@ -10,7 +10,7 @@ const ZOTE_IMAGE_URL = "https://cdn.wikimg.net/en/hkwiki/images/5/5a/B_Zote.png"
 
 export const data = new SlashCommandBuilder()
   .setName("precepts")
-  .setDescription("Show infomation about a Zote precept (random if name not specified).")
+  .setDescription("Show infomation about a Zote precept (random if name unspecified).")
   .addStringOption((option) =>
     option
       .setName("name")

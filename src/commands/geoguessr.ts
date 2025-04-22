@@ -15,7 +15,7 @@ const TIME_TO_ANSWER = 21; // in seconds
 export const data = new SlashCommandBuilder()
   .setName("geoguessr")
   .setDescription(
-    "Guess the Hollow Knight location from a random image from a mode (everything if mode not specified)."
+    "Guess the Hollow Knight location from a random image from a mode (everything if mode unspecified)."
   )
   .addStringOption((option) =>
     option

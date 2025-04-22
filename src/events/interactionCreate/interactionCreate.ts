@@ -1,20 +1,55 @@
 import { Interaction } from "discord.js";
 
-import geoguessrModes from "../../data/geoguessrModes.json";
+import achievements from "../../data/achievements.json";
+import achievementCategories from "../../data/achievementCategories.json";
 import charms from "../../data/charms.json";
+import geoguessrModes from "../../data/geoguessrModes.json";
 import journal from "../../data/journal.json";
 import precepts from "../../data/precepts.json";
 
 module.exports = (interaction: Interaction) => {
   if (!interaction.isAutocomplete()) return;
 
-  const focusedValue = interaction.options.getFocused().toLowerCase();
+  const focusedOption = interaction.options.getFocused(true);
+  const focusedName = focusedOption.name.toLowerCase();
+  const focusedValue = focusedOption.value.toLowerCase();
+
   let results: { name: string; value: string }[] = [];
 
   switch (interaction.commandName) {
+    case "achievements":
+      switch (focusedName) {
+        case "category":
+          results = achievementCategories
+            .filter((achievementCategory) =>
+              achievementCategory.name.toLowerCase().includes(focusedValue)
+            )
+            .map((choice) => ({
+              name: choice.name,
+              value: choice.name,
+            }));
+          break;
+
+        case "name":
+          const category = interaction.options.getString("category", true);
+
+          results = achievements
+            .filter(
+              (achievement) =>
+                achievement.category.toLowerCase() === category.toLowerCase() &&
+                achievement.name.toLowerCase().includes(focusedValue)
+            )
+            .map((choice) => ({
+              name: choice.name,
+              value: choice.name,
+            }));
+          break;
+      }
+      break;
+
     case "charms":
       results = charms
-        .filter((charm) => charm.name.toLowerCase().startsWith(focusedValue))
+        .filter((charm) => charm.name.toLowerCase().includes(focusedValue))
         .map((choice) => ({
           name: choice.name,
           value: choice.name,
@@ -29,7 +64,7 @@ module.exports = (interaction: Interaction) => {
 
     case "journal":
       results = journal
-        .filter((entry) => entry.name.toLowerCase().startsWith(focusedValue))
+        .filter((entry) => entry.name.toLowerCase().includes(focusedValue))
         .map((choice) => ({
           name: choice.name,
           value: choice.name,
@@ -38,7 +73,7 @@ module.exports = (interaction: Interaction) => {
 
     case "precepts":
       results = precepts
-        .filter((precept) => precept.name.toLowerCase().startsWith(focusedValue))
+        .filter((precept) => precept.name.toLowerCase().includes(focusedValue))
         .map((choice) => ({
           name: choice.name,
           value: choice.name,

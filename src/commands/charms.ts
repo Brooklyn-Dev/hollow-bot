@@ -7,7 +7,7 @@ import charms from "../data/charms.json";
 
 export const data = new SlashCommandBuilder()
   .setName("charms")
-  .setDescription("Show information about a Hollow Knight charm (random if name is not specified).")
+  .setDescription("Show information about a Hollow Knight charm (random if name is unspecified).")
   .addStringOption((option) =>
     option
       .setName("name")
