@@ -95,7 +95,7 @@ export async function run({ interaction }: SlashCommandProps) {
     inline: true,
   });
 
-  await sendWithPreview({ interaction, embed });
+  await sendWithPreview(interaction, embed);
 }
 
 export const options: CommandOptions = {

@@ -7,21 +7,20 @@ import {
   InteractionResponse,
   Interaction,
   MessageFlags,
+  AttachmentBuilder,
+  ChatInputCommandInteraction,
 } from "discord.js";
-import { SlashCommandProps } from "commandkit";
 import { addUsageFooter } from "./addUsageFooter";
 
 /**
  * Sends an ephemeral preview of an embed with a "Send this message" button.
  * Once the button is clicked, the message is published publicly and the button is disabled.
  */
-export async function sendWithPreview({
-  interaction,
-  embed,
-}: {
-  interaction: SlashCommandProps["interaction"];
-  embed: EmbedBuilder;
-}) {
+export async function sendWithPreview(
+  interaction: ChatInputCommandInteraction,
+  embed: EmbedBuilder,
+  files?: AttachmentBuilder[] | null
+) {
   addUsageFooter(embed, interaction);
 
   // Create button to send message
@@ -37,6 +36,7 @@ export async function sendWithPreview({
     content: "**Preview** - Send this message?",
     embeds: [embed],
     components: [row],
+    files: files || [],
     flags: MessageFlags.Ephemeral,
   });
 
@@ -63,6 +63,7 @@ export async function sendWithPreview({
       // Send the embed publicly
       await i.followUp({
         embeds: [embed],
+        files: files || [],
         components: [],
       });
     }

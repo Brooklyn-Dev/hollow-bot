@@ -53,7 +53,7 @@ export async function run({ interaction }: SlashCommandProps) {
     .setThumbnail(ZOTE_IMAGE_URL)
     .setColor("Blue");
 
-  await sendWithPreview({ interaction, embed });
+  await sendWithPreview(interaction, embed);
 }
 
 export const options: CommandOptions = {

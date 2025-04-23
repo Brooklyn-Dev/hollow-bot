@@ -4,6 +4,7 @@ import { EmbedBuilder, MessageFlags, SlashCommandBuilder } from "discord.js";
 import { ensureTextChannel } from "../utils/ensureTextChannel";
 import { sendWithPreview } from "../utils/sendWithPreview";
 import charms from "../data/charms.json";
+import { Charm } from "../types/charmsTypes";
 
 export const data = new SlashCommandBuilder()
   .setName("charms")
@@ -22,7 +23,7 @@ export async function run({ interaction }: SlashCommandProps) {
 
   const name = interaction.options.getString("name");
 
-  let charm;
+  let charm: Charm | undefined;
   if (name) {
     // Try to find the charm by name
     charm = charms.find((c) => c.name.toLowerCase() === name.toLowerCase());
@@ -55,7 +56,7 @@ export async function run({ interaction }: SlashCommandProps) {
     .setThumbnail(charm.imageUrl)
     .setColor("Blue");
 
-  await sendWithPreview({ interaction, embed });
+  await sendWithPreview(interaction, embed);
 }
 
 export const options: CommandOptions = {

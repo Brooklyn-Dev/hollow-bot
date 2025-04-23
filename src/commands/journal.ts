@@ -56,7 +56,7 @@ export async function run({ interaction }: SlashCommandProps) {
     .setThumbnail(entry.imageUrl)
     .setColor("Blue");
 
-  await sendWithPreview({ interaction, embed });
+  await sendWithPreview(interaction, embed);
 }
 
 export const options: CommandOptions = {
