@@ -3,6 +3,7 @@ import { Interaction } from "discord.js";
 import achievements from "../../data/achievements.json";
 import achievementCategories from "../../data/achievementCategories.json";
 import charms from "../../data/charms.json";
+import checklists from "../../data/completionChecklists.json";
 import geoguessrModes from "../../data/geoguessrModes.json";
 import journal from "../../data/journal.json";
 import precepts from "../../data/precepts.json";
@@ -53,6 +54,15 @@ module.exports = (interaction: Interaction) => {
         .map((choice) => ({
           name: choice.name,
           value: choice.name,
+        }));
+      break;
+
+    case "checklist":
+      results = checklists
+        .filter((checklist) => checklist.subcategory.toLowerCase().includes(focusedValue))
+        .map((choice) => ({
+          name: choice.subcategory,
+          value: choice.subcategory,
         }));
       break;
 
